@@ -1,9 +1,7 @@
--- ========================================
 -- 选课管理系统 - 测试数据
--- ========================================
 
--- 课程数据（用于SQL题目验证）
-INSERT IGNORE INTO courses (course_id, course_name, course_type, capacity) VALUES
+-- 课程数据
+INSERT INTO courses (course_id, course_name, course_type, capacity) VALUES
 ('C000001', 'Java程序设计', '专业课', 120),
 ('C000002', '数据库原理', '专业课', 100),
 ('C000003', '计算机网络', '专业课', 80),
@@ -14,7 +12,7 @@ INSERT IGNORE INTO courses (course_id, course_name, course_type, capacity) VALUE
 ('C000008', '数据结构', '专业课', 100);
 
 -- 学生数据
-INSERT IGNORE INTO students (student_id, student_name, grade, major) VALUES
+INSERT INTO students (student_id, student_name, grade, major) VALUES
 ('S000001', '张三', '2024', '计算机科学'),
 ('S000002', '李四', '2024', '软件工程'),
 ('S000003', '王五', '2023', '计算机科学'),
@@ -22,8 +20,8 @@ INSERT IGNORE INTO students (student_id, student_name, grade, major) VALUES
 ('S000005', '孙七', '2023', '网络工程'),
 ('S000006', '周八', '2024', '计算机科学');
 
--- 选课记录数据（用于SQL题目验证）
-INSERT IGNORE INTO enrollments (student_id, course_id) VALUES
+-- 选课记录数据
+INSERT INTO enrollments (student_id, course_id) VALUES
 ('S000001', 'C000001'),
 ('S000001', 'C000002'),
 ('S000002', 'C000003'),
@@ -35,7 +33,7 @@ INSERT IGNORE INTO enrollments (student_id, course_id) VALUES
 ('S000006', 'C000007');
 
 -- 样例选课记录（应用层数据，含课程类型）
-INSERT IGNORE INTO enroll_records (student_id, course_id, course_name, course_type) VALUES
+INSERT INTO enroll_records (student_id, course_id, course_name, course_type) VALUES
 ('S000001', 'C000001', 'Java程序设计', '专业课'),
 ('S000001', 'C000002', '数据库原理', '专业课'),
 ('S000002', 'C000003', '计算机网络', '专业课'),

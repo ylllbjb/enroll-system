@@ -73,8 +73,9 @@ public class EnrollServiceImpl implements EnrollService {
 
         // 批量插入数据库（INSERT IGNORE 处理与已有数据的重复）
         for (EnrollRecord r : dedupedNew) {
+            // H2 使用 MERGE 实现 upsert（等同于 INSERT ... ON DUPLICATE KEY UPDATE）
             jdbcTemplate.update(
-                "INSERT IGNORE INTO enroll_records (student_id, course_id, course_name, course_type) VALUES (?, ?, ?, ?)",
+                "MERGE INTO enroll_records (student_id, course_id, course_name, course_type) KEY (student_id, course_id) VALUES (?, ?, ?, ?)",
                 r.getStudentId(), r.getCourseId(), r.getCourseName(), r.getCourseType()
             );
         }
