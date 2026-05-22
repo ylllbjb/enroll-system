@@ -1,5 +1,7 @@
 package com.enroll.entity;
 
+import java.util.Objects;
+
 /**
  * 选课记录实体类
  * 【AI生成】基础字段和构造器由AI生成，后续手动补充了 courseType 字段以支持分类功能
@@ -90,7 +92,7 @@ public class EnrollRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EnrollRecord that = (EnrollRecord) o;
-        return studentId.equals(that.studentId) && courseId.equals(that.courseId);
+        return Objects.equals(studentId, that.studentId) && Objects.equals(courseId, that.courseId);
     }
 
     @Override

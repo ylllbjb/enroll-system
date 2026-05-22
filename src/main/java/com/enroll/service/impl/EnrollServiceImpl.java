@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class EnrollServiceImpl implements EnrollService {
 
-    // 使用线程安全的 ConcurrentHashMap 存储选课记录（模拟数据库）
+    // 使用线程安全的同步列表存储选课记录（模拟数据库）
     private final List<EnrollRecord> storage = Collections.synchronizedList(new ArrayList<>());
 
     // 样例数据初始化
@@ -62,7 +62,8 @@ public class EnrollServiceImpl implements EnrollService {
     @Override
     public List<EnrollRecord> importCsv(String csvText) {
         List<EnrollRecord> newRecords = new ArrayList<>();
-        String[] lines = csvText.split("\\n");
+        // 统一处理 Windows（\r\n）和 Unix（\n）换行符
+        String[] lines = csvText.replace("\r\n", "\n").split("\n");
 
         for (String line : lines) {
             String trimmed = line.trim();
