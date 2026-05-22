@@ -50,6 +50,7 @@
 - 检索结果支持空数据提示
 
 请生成完整可运行的SpringBoot 3.5.0项目代码，包含pom.xml、Application启动类、实体类、Service接口及实现、Controller、application.properties、Thymeleaf前端页面、CSS样式。
+仅需 SpringBoot Web + Thymeleaf 依赖，无需数据库。
 ```
 
 ## 代码标注说明
@@ -62,7 +63,6 @@
 - `index.html`：前端页面结构和JavaScript交互逻辑
 - `style.css`：全部样式
 - `pom.xml`、`application.properties`：项目配置
-- `schema.sql`、`data.sql`：数据库脚本
 - `task2_queries.sql`：SQL题目答案
 
 ### 手动修改/优化部分
@@ -81,6 +81,7 @@
 ```
 enroll-system/
 ├── pom.xml                          # Maven配置（SpringBoot 3.5.0 + Java 17）
+├── mvnw / mvnw.cmd                  # Maven Wrapper（无需安装Maven）
 ├── README.md
 ├── ANALYSIS.md                      # 题目4：分析设计文档（含ER图）
 └── src/main/
@@ -102,21 +103,22 @@ enroll-system/
         ├── static/css/style.css      # 样式表
         ├── templates/index.html      # Thymeleaf前端页面
         └── sql/
-            ├── schema.sql            # 建表脚本
-            ├── data.sql              # 测试数据
             └── task2_queries.sql     # 题目2：SQL答案
 ```
 
 ## 运行方式
 
 ```bash
-# 1. 确保已安装 JDK 17+ 和 Maven 3.6+
+# 1. 确保已安装 JDK 17+
 
 # 2. 进入项目目录
 cd enroll-system
 
-# 3. 启动项目
-mvn spring-boot:run
+# 3. 启动项目（mvnw 为 Maven Wrapper，无需单独安装 Maven）
+#    Windows 系统：
+mvnw.cmd spring-boot:run
+#    macOS / Linux 系统：
+./mvnw spring-boot:run
 
 # 4. 打开浏览器访问
 http://localhost:8080
@@ -128,4 +130,3 @@ http://localhost:8080
 2. **CSV导入**：在文本框中粘贴CSV数据，点击"导入数据"，数据经后端处理后回显
 3. **选课检索**：输入关键词（学生ID/课程ID/课程名称/课程类型），查看检索结果
 4. **空结果提示**：输入不存在的关键词，显示"无匹配选课记录"
-5. **H2控制台**：访问 http://localhost:8080/h2-console 查看SQL题目相关表数据
