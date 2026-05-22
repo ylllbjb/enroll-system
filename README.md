@@ -50,7 +50,7 @@
 - 检索结果支持空数据提示
 
 请生成完整可运行的SpringBoot 3.5.0项目代码，包含pom.xml、Application启动类、实体类、Service接口及实现、Controller、application.properties、Thymeleaf前端页面、CSS样式。
-仅需 SpringBoot Web + Thymeleaf 依赖，无需数据库。
+使用 MySQL 数据库 + Spring JdbcTemplate 进行数据持久化，启动时自动建表并初始化样例数据。
 ```
 
 ## 代码标注说明
@@ -63,6 +63,7 @@
 - `index.html`：前端页面结构和JavaScript交互逻辑
 - `style.css`：全部样式
 - `pom.xml`、`application.properties`：项目配置
+- `schema.sql`、`data.sql`：MySQL 建表与样例数据
 - `task2_queries.sql`：SQL题目答案
 
 ### 手动修改/优化部分
@@ -71,6 +72,7 @@
 |------|----------|----------|
 | EnrollRecord.java | 新增 `courseType` 字段及全参构造器 | 适配第三题的分类功能需求 |
 | EnrollRecord.java | 重写 `equals/hashCode` | 用于LinkedHashMap去重，题目1核心要求 |
+| EnrollServiceImpl.java | 重写为 JdbcTemplate 操作 MySQL | 原为内存存储，改为真正读写数据库，全栈名副其实 |
 | EnrollServiceImpl.java | 新增 `autoDetectCourseType()` 方法 | 自动识别课程类型，适配CSV未标注数据 |
 | index.html | 新增"无匹配选课记录"空结果处理 | 完善检索交互，符合题目"检索不到提示"要求 |
 | index.html | 新增 `renderGroupedData()` 空数据判断 | 防止无数据时页面空白 |
@@ -103,26 +105,44 @@ enroll-system/
         ├── static/css/style.css      # 样式表
         ├── templates/index.html      # Thymeleaf前端页面
         └── sql/
+            ├── schema.sql            # MySQL 建表脚本
+            ├── data.sql              # 测试数据
             └── task2_queries.sql     # 题目2：SQL答案
 ```
 
 ## 运行方式
 
-```bash
-# 1. 确保已安装 JDK 17+
+### 环境要求
+- JDK 17+
+- MySQL 8.0+（需提前安装并启动）
 
-# 2. 进入项目目录
+### 数据库准备
+
+```sql
+-- 在 MySQL 中创建数据库
+CREATE DATABASE IF NOT EXISTS enroll_db DEFAULT CHARACTER SET utf8mb4;
+```
+
+> 默认连接配置：`localhost:3306/enroll_db`，用户名 `root`，密码 `root`
+> 如不一致，请修改 `src/main/resources/application.properties` 中的数据库配置。
+
+### 启动应用
+
+```bash
+# 1. 进入项目目录
 cd enroll-system
 
-# 3. 启动项目（mvnw 为 Maven Wrapper，无需单独安装 Maven）
+# 2. 启动项目（mvnw 为 Maven Wrapper，无需单独安装 Maven）
 #    Windows 系统：
 mvnw.cmd spring-boot:run
 #    macOS / Linux 系统：
 ./mvnw spring-boot:run
 
-# 4. 打开浏览器访问
+# 3. 打开浏览器访问
 http://localhost:8080
 ```
+
+应用启动时会自动执行 `schema.sql` 建表、`data.sql` 插入样例数据。
 
 ## 功能验证
 
